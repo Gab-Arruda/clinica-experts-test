@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Requisition;
 use App\Models\Link;
+use \App\Http\Requests\StoreRequisitionRequest;
 use Illuminate\Http\Request;
 
 class RequisitionController extends Controller
@@ -19,7 +20,7 @@ class RequisitionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequisitionRequest $request)
     {
         $requisition = new Requisition();
         $requisition->link_id = $request->input('link_id');
