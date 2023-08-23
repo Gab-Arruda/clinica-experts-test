@@ -36,7 +36,7 @@ class LinkController extends Controller
      */
     public function show(string $id)
     {
-        return Link::find($id);
+        return Link::with('requisitions')->find($id);
     }
 
     /**

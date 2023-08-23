@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Requisition;
+use App\Models\Link;
 use Illuminate\Http\Request;
 
 class RequisitionController extends Controller
@@ -26,6 +27,7 @@ class RequisitionController extends Controller
         $requisition->user_agent = $request->input('user_agent');
 
         if ($requisition->save()) {
+            Link::find($request->input('link_id'))->increment('counter');
             return $requisition;
         }
     }
