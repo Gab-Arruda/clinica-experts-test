@@ -64,7 +64,7 @@ class LinkController extends Controller
         }
     }
 
-    function random_str(
+    private function random_str(
         int $length = 8,
         string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     ): string {
