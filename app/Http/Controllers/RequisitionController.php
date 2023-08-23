@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Requisition;
-use App\Models\Link;
 use \App\Http\Requests\StoreRequisitionRequest;
-use Illuminate\Http\Request;
+use App\Services\RequisitionService;
 
 class RequisitionController extends Controller
 {
+    protected RequisitionService $service;
+
+    public function __construct(RequisitionService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Requisition::all();
+        return $this->service->list();
     }
 
     /**
@@ -22,38 +26,23 @@ class RequisitionController extends Controller
      */
     public function store(StoreRequisitionRequest $request)
     {
-        $requisition = new Requisition();
-        $requisition->link_id = $request->input('link_id');
-        $requisition->ip = $request->input('ip');
-        $requisition->user_agent = $request->input('user_agent');
-
-        if ($requisition->save()) {
-            Link::find($request->input('link_id'))->increment('counter');
-            return $requisition;
-        }
+        return $this->service->store($request->validated());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        return Requisition::find($id);
+        return $this->service->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreRequisitionRequest $request, string $id)
     {
-        $requisition = Requisition::find($id);
-        $requisition->link_id = $request->input('link_id');
-        $requisition->ip = $request->input('ip');
-        $requisition->user_agent = $request->input('user_agent');
-
-        if ($requisition->save()) {
-            return $requisition;
-        }
+        return $this->service->update($request->validated(), $id);
     }
 
     /**
@@ -61,9 +50,6 @@ class RequisitionController extends Controller
      */
     public function destroy(string $id)
     {
-        $requisition = Requisition::findOrFail($id);
-        if($requisition->delete()) {
-            return $requisition;
-        }
+        return $this->service->delete($id);
     }
 }
