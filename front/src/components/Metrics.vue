@@ -9,10 +9,8 @@ onMounted(() => {
   axios.get('http://localhost:8000/api/links/metrics')
   .then(response => {
     app_metrics.value = response.data;
-    console.log('Metrics loaded'+response.data);
   });
 })
-
 </script>
 
 <template>
