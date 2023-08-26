@@ -33,49 +33,61 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="app bg-slate-200">
+  <main class="app bg-slate-200 flex flex-col justify-between h-screen">
     <header class="flex flex-col items-center justify-around bg-white py-4">
       <input type="text" class="bg-slate-200">
     </header>
-    <body class="px-8">        
+    <body class="px-16">        
       <section class="my-8">
         <ul class="flex flex-row items-center justify-around">
-          <li class="flex flex-col">
-            <span class="text-center">{{ app_metrics.links_amount }}</span>
-            <span>Links</span>
+          <li class="flex items-center">
+            <img src="./assets/link.png" alt="link-icon" class="w-6 h-6">
+            <div class="flex flex-col">
+              <span class="text-center font-bold text-3xl">{{ app_metrics.links_amount }}</span>
+              <span class="font-bold text-slate-500">Links</span>
+            </div>
           </li>
-          <li class="flex flex-col">
-            <span class="text-center">{{ app_metrics.requisitions_amount }}</span>
-            <span>Acessos totais</span>
+          <li class="flex items-center">
+            <img src="./assets/view.png" alt="view-icon" class="w-6 h-6">
+            <div class="flex flex-col">
+              <span class="text-center font-bold text-3xl">{{ app_metrics.requisitions_amount }}</span>
+              <span class="font-bold text-slate-500">All time views</span>
+            </div>
           </li>
-          <li class="flex flex-col">
-            <span class="text-center">{{ app_metrics.requisitions_this_month }}</span>
-            <span>Acessos esse mês</span>
+          <li class="flex items-center">
+            <img src="./assets/30-days.png" alt="30-days-icon" class="w-6 h-6">
+            <div class="flex flex-col">
+              <span class="text-center font-bold text-3xl">{{ app_metrics.requisitions_this_month }}</span>
+              <span class="font-bold text-slate-500">Views this month</span>
+            </div>
           </li>
         </ul>
       </section>
       <section class="flex items-center justify-center">
-        <img src="./assets/two-arrow.png" alt="two-arrow" class="w-8 h-8 mx-4 cursor-pointer">
-        <img src="./assets/filter.png" alt="two-arrow" class="w-8 h-8 mx-4 cursor-pointer">
+        <img src="./assets/two-arrow.png" alt="two-arrow-icon" class="w-8 h-8 mx-4 cursor-pointer">
+        <img src="./assets/filter.png" alt="filter-icon" class="w-8 h-8 mx-4 cursor-pointer">
       </section>
       <section class="links-list my-4">
         <ul class="flex-col my-4">
-          <li v-for="link in links_list" :key="link.id" class="flex justify-between flex-wrap items-center my-3 bg-white px-4 py-2 rounded-md">
-            <div class="flex-col">
-              <h1>{{ link.description }}</h1>
-              <span>{{ link.slug }}</span>
+          <li v-for="link in links_list" :key="link.id" class="flex justify-between flex-wrap items-center my-3 bg-white px-8 py-4 rounded-md">
+            <div class="flex flex-col">
+              <span class="font-bold text-xl">{{ link.description }}</span>
+              <span class="font-bold text-sky-400/100">{{ link.slug }}</span>
             </div>
-            <div>
-              <button class="counter">{{ link.counter }}</button>
-              <button class="delete" @click="editLink(link)">Editar</button>
-              <button class="delete" @click="removeLink(link)">Deletar</button>
+            <div class="flex">
+              <div class="flex mx-1">
+                <span class="counter text-xl">{{ link.counter }}</span>
+                <img src="./assets/bar-chart.png" alt="bar-chart-icon" class="w-6 h-6 mx-1 cursor-pointer"/>
+              </div>
+              <img src="./assets/editing.png" alt="edit-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="editLink(link)"/>
+              <img src="./assets/trash.png" alt="trash-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="removeLink(link)"/>
             </div>
           </li>
         </ul>
       </section>
     </body>
-    <footer class="flex flex-col items-center justify-around bg-white py-4">
-      <h4>Teste técnico Clínica Experts</h4>
+    <footer class="flex flex-col items-center justify-around bg-white py-2">
+      <h4 class="font-bold">Teste técnico Clínica Experts</h4>
     </footer>
   </main>
 </template>
