@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Link;
+use App\Models\Requisition;
+
 
 class LinkService
 {
@@ -47,6 +49,14 @@ class LinkService
         if($link->delete()) {
             return $link;
         }
+    }
+
+    public function app_metrics() {
+        return [
+            'links_amount' => Link::count(),
+            'requisitions_amount' => Requisition::count(),
+            'requisitions_this_month' => Link::sum('counter')
+        ];
     }
 
     private function random_str(

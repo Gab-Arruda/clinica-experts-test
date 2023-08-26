@@ -56,4 +56,12 @@ class LinkController extends Controller
     {
         return $this->service->delete($id);
     }
+
+    /**
+     * Display the amount of links and requisitions.
+     */
+    public function app_metrics()
+    {
+        return $this->service->app_metrics();
+    }
 }

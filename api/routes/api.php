@@ -18,6 +18,7 @@ use App\Http\Controllers\RequisitionController;
 
 Route::group(['prefix' => 'links'], function () {
     Route::get('/', [LinkController::class, 'index']);
+    Route::get('/metrics', [LinkController::class, 'app_metrics']);
     Route::post('/', [LinkController::class, 'store']);
     Route::get('/{id}', [LinkController::class, 'show']);
     Route::put('/{id}', [LinkController::class, 'update']);
