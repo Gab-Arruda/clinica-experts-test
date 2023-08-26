@@ -2,7 +2,9 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { ref, onMounted, computed, watch } from 'vue';
 import axios from 'axios';
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
 const links_list = ref([]);
 const app_metrics = ref({});
@@ -51,11 +53,7 @@ onMounted(() => {
 
 <template>
   <main class="app bg-slate-200 flex flex-col justify-between h-screen">
-    <header class="flex flex-wrap items-center justify-center bg-white py-4">
-      <img src="./assets/search-interface-symbol.png" alt="search-icon" class="w-6 h-6 mx-6 my-2 cursor-pointer hidden sm:block">
-      <input type="text" placeholder="Search or paste URL" class="bg-slate-200 text-slate-500 mx-2 py-1 px-2 w-4/5 sm:w-2/4">
-      <img src="./assets/plus-grey.png" alt="plus-icon" class="w-6 h-6 mx-6 my-2 cursor-pointer">
-    </header>
+    <Header></Header>
     <body class="px-16">        
       <section class="my-8">
         <ul class="flex flex-row flex-wrap items-center justify-around">
@@ -105,9 +103,7 @@ onMounted(() => {
         </ul>
       </section>
     </body>
-    <footer class="flex flex-col items-center justify-around bg-white py-2">
-      <h4 class="font-bold text-slate-500">Teste técnico Clínica Experts</h4>
-    </footer>
+    <Footer></Footer>
   </main>
 </template>
 
