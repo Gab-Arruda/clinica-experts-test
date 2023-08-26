@@ -25,11 +25,11 @@ class RequisitionService
     }
 
     public function show(int $id) {
-        return Requisition::find($id);
+        return Requisition::findOrFail($id);
     }
 
     public function update(array $params, int $id) {
-        $requisition = Requisition::find($id);
+        $requisition = Requisition::findOrFail($id);
         $requisition->link_id = $params['link_id'];
         $requisition->ip = $params['ip'];
         $requisition->user_agent = $params['user_agent'];

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use \App\Http\Requests\StoreUpdateLinkRequest;
+use \App\Http\Requests\ListLinkRequest;
 use App\Services\LinkService;
+use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
@@ -17,9 +19,9 @@ class LinkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ListLinkRequest $request)
     {
-        return $this->service->list();
+        return $this->service->list($request->toArray());
     }
 
     /**

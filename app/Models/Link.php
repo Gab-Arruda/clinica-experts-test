@@ -9,7 +9,7 @@ class Link extends Model
 {
     use HasFactory;
     protected $table = 'links';
-    protected $fillable = ['slug', 'url', 'description'];
+    protected $fillable = ['slug', 'url', 'description', 'counter'];
 
     public function requisitions()
     {

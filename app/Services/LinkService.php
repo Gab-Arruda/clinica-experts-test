@@ -6,9 +6,14 @@ use App\Models\Link;
 
 class LinkService
 {
-    public function list()
+    public function list(array $params)
     {
-        return Link::all();
+        $link = Link::query();
+        if(isset($params['filterByColumn']) && isset($params['filterOrderType'])) {
+            $link->orderBy($params['filterByColumn'], $params['filterOrderType']);
+        }
+
+        return $link->get();
     }
 
     public function store(array $params) {
@@ -23,7 +28,7 @@ class LinkService
     }
 
     public function show(int $id) {
-        return Link::with('requisitions')->find($id);
+        return Link::with('requisitions')->findOrFail($id);
     }
 
     public function update(array $params, int $id) {
