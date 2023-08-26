@@ -34,31 +34,33 @@ onMounted(() => {
 
 <template>
   <main class="app bg-slate-200 flex flex-col justify-between h-screen">
-    <header class="flex flex-col items-center justify-around bg-white py-4">
-      <input type="text" class="bg-slate-200">
+    <header class="flex flex-wrap items-center justify-center bg-white py-4">
+      <img src="./assets/search-interface-symbol.png" alt="search-icon" class="w-6 h-6 mx-6 my-2 cursor-pointer hidden sm:block">
+      <input type="text" placeholder="Search or paste URL" class="bg-slate-200 text-slate-500 mx-2 py-1 px-2 w-4/5 sm:w-2/4">
+      <img src="./assets/plus-grey.png" alt="plus-icon" class="w-6 h-6 mx-6 my-2 cursor-pointer">
     </header>
     <body class="px-16">        
       <section class="my-8">
-        <ul class="flex flex-row items-center justify-around">
-          <li class="flex items-center">
+        <ul class="flex flex-row flex-wrap items-center justify-around">
+          <li class="flex m-4">
             <img src="./assets/link.png" alt="link-icon" class="w-6 h-6">
-            <div class="flex flex-col">
+            <div class="flex flex-col max-w-[100px]">
               <span class="text-center font-bold text-3xl">{{ app_metrics.links_amount }}</span>
-              <span class="font-bold text-slate-500">Links</span>
+              <span class="text-center font-bold text-slate-500">Links</span>
             </div>
           </li>
-          <li class="flex items-center">
+          <li class="flex m-4">
             <img src="./assets/view.png" alt="view-icon" class="w-6 h-6">
-            <div class="flex flex-col">
+            <div class="flex flex-col max-w-[100px]">
               <span class="text-center font-bold text-3xl">{{ app_metrics.requisitions_amount }}</span>
-              <span class="font-bold text-slate-500">All time views</span>
+              <span class="text-center font-bold text-slate-500">All time views</span>
             </div>
           </li>
-          <li class="flex items-center">
+          <li class="flex m-4">
             <img src="./assets/30-days.png" alt="30-days-icon" class="w-6 h-6">
-            <div class="flex flex-col">
+            <div class="flex flex-col max-w-[100px]">
               <span class="text-center font-bold text-3xl">{{ app_metrics.requisitions_this_month }}</span>
-              <span class="font-bold text-slate-500">Views this month</span>
+              <span class="text-center font-bold text-slate-500">Views this month</span>
             </div>
           </li>
         </ul>
@@ -77,7 +79,7 @@ onMounted(() => {
             <div class="flex">
               <div class="flex mx-1">
                 <span class="counter text-xl">{{ link.counter }}</span>
-                <img src="./assets/bar-chart.png" alt="bar-chart-icon" class="w-6 h-6 mx-1 cursor-pointer"/>
+                <img src="./assets/bar-chart.png" alt="bar-chart-icon" class="w-6 h-6 mx-1"/>
               </div>
               <img src="./assets/editing.png" alt="edit-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="editLink(link)"/>
               <img src="./assets/trash.png" alt="trash-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="removeLink(link)"/>
@@ -87,7 +89,7 @@ onMounted(() => {
       </section>
     </body>
     <footer class="flex flex-col items-center justify-around bg-white py-2">
-      <h4 class="font-bold">Teste técnico Clínica Experts</h4>
+      <h4 class="font-bold text-slate-500">Teste técnico Clínica Experts</h4>
     </footer>
   </main>
 </template>
