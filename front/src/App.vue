@@ -7,28 +7,36 @@ import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Metrics from './components/Metrics.vue'
 import Filter from './components/Filter.vue'
+import LinksList from './components/LinksList.vue'
 
 const links_list = ref([]);
 const order_type = ref('desc');
 const filter_column = ref('created_at');
 const filter_modal = ref(false);
+const edit_modal = ref(false);
 
-const removeLink = (link) => {
+const editLink = (link) => {
   // chamar rota para deletar o link
   // atualizar o links_list
   console.log('deletou o link: ' + link.url);
 }
 
-const editLink = (link) => {
+const deleteLink = (link) => {
   // chamar rota para editar o link
   // atualizar o links_list
-  console.log('editou o link: ' + link.url);
+  console.log('delete o link: ' + link.url);
 }
 
 const setFilterModal = () => {
-  // seta alguma ref pra abrir o modal de filter
+  // abre modal de filtrar
   filter_modal.value = !filter_modal.value;
   console.log('setFilterModal: ' + filter_modal.value);
+}
+
+const setEditModal = () => {
+  // abre modal de editar
+  edit_modal.value = !edit_modal.value;
+  console.log('setEditModal: ' + edit_modal.value);
 }
 
 const setOrderType = () => {
@@ -61,24 +69,7 @@ onMounted(() => {
     <body class="px-16 grow">        
       <Metrics></Metrics>
       <Filter @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
-      <section class="links-list my-4">
-        <ul class="flex-col my-4">
-          <li v-for="link in links_list" :key="link.id" class="flex justify-between flex-wrap items-center my-3 bg-white px-8 py-4 rounded-md">
-            <div class="flex flex-col">
-              <span class="font-bold text-xl">{{ link.description }}</span>
-              <span class="font-bold text-sky-400/100">{{ link.slug }}</span>
-            </div>
-            <div class="flex">
-              <div class="flex mx-1">
-                <span class="counter text-xl">{{ link.counter }}</span>
-                <img src="./assets/bar-chart.png" alt="bar-chart-icon" class="w-6 h-6 mx-1"/>
-              </div>
-              <img src="./assets/editing.png" alt="edit-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="editLink(link)"/>
-              <img src="./assets/trash.png" alt="trash-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="removeLink(link)"/>
-            </div>
-          </li>
-        </ul>
-      </section>
+      <LinksList :links_list="links_list" @setEditModal="setEditModal" @deleteLink="deleteLink"></LinksList>
     </body>
     <Footer></Footer>
   </main>
