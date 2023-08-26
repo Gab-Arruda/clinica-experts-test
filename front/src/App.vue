@@ -6,6 +6,8 @@ import HelloWorld from './components/HelloWorld.vue'
 
 const links_list = ref([]);
 const app_metrics = ref({});
+const order_type = ref('desc');
+const filter_column = ref('created_at');
 
 const removeLink = (link) => {
   // chamar rota para deletar o link
@@ -19,11 +21,26 @@ const editLink = (link) => {
   console.log('editou o link: ' + link.url);
 }
 
-onMounted(() => {
-  axios.get('http://localhost:8000/api/links/')
+const setOrderType = () => {
+  order_type.value = order_type.value == 'asc' ? 'desc' : 'asc';
+  getLinksList();
+}
+
+const getLinksList = () => {
+  axios.get('http://localhost:8000/api/links/', { params: {filterByColumn : filter_column.value, filterOrderType: order_type.value}})
   .then(response => {
     links_list.value = response.data;
   });
+}
+
+onMounted(() => {
+  // Lista de links
+  axios.get('http://localhost:8000/api/links/', { params: {filterByColumn : "created_at", filterOrderType: "desc"}})
+  .then(response => {
+    links_list.value = response.data;
+  });
+
+  // Métricas do app
   axios.get('http://localhost:8000/api/links/metrics')
   .then(response => {
     app_metrics.value = response.data;
@@ -66,8 +83,8 @@ onMounted(() => {
         </ul>
       </section>
       <section class="flex items-center justify-center">
-        <img src="./assets/two-arrow.png" alt="two-arrow-icon" class="w-8 h-8 mx-4 cursor-pointer">
-        <img src="./assets/filter.png" alt="filter-icon" class="w-8 h-8 mx-4 cursor-pointer">
+        <img src="./assets/two-arrow.png" alt="two-arrow-icon" class="w-8 h-8 mx-4 cursor-pointer" @click="setOrderType()">
+        <img src="./assets/filter.png" alt="filter-icon" class="w-8 h-8 mx-4 cursor-pointer" @click="editLink(link)">
       </section>
       <section class="links-list my-4">
         <ul class="flex-col my-4">
