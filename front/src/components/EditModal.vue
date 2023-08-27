@@ -39,7 +39,7 @@ onMounted(() => {
 
 <template>
     <section class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
-        <div class="bg-white rounded shadow-lg w-1/3">
+        <div class="bg-white rounded shadow-lg w-full max-w-screen-md mx-2">
             <div class="border-b px-4 py-2">
                 <h3 class="font-bold">Edit link: {{ this.selected_link.slug }}</h3>
             </div>

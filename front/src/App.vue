@@ -88,14 +88,14 @@ onMounted(() => {
 <template>
   <main class="app bg-slate-200 flex flex-col justify-between h-screen">
     <Header @setAddModal="setAddModal"></Header>
-    <body class="px-16 grow">        
+    <body class="px-16 app bg-slate-200 grow">        
       <Metrics></Metrics>
       <Filter @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
       <LinksList :links_list="links_list" @setEditModal="setEditModal" @deleteLink="deleteLink"></LinksList>
     </body>
     <AddModal v-if="add_modal" @addLink="addLink" @setAddModal="setAddModal" @getLinksList="getLinksList"></AddModal>
     <EditModal v-if="edit_modal" :selected_link="selected_link" @setEditModal="setEditModal" @getLinksList="getLinksList"></EditModal>
-    <FilterModal :filter_modal="filter_modal" @setColumn="setColumn" @setFilterModal="setFilterModal"></FilterModal>
+    <FilterModal v-if="filter_modal" @setColumn="setColumn" @setFilterModal="setFilterModal"></FilterModal>
     <Footer></Footer>
   </main>
 </template>
