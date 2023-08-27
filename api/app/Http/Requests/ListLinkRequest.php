@@ -20,6 +20,7 @@ class ListLinkRequest extends FormRequest
         return [
             'filterByColumn' => ['nullable','string', Rule::in(["slug", "url", "description", "counter", "created_at", "updated_at"])],
             'filterOrderType' => ['nullable', 'string', Rule::in('asc', 'desc')],
+            'searchString' => ['nullable', 'string']
         ];
     }
 

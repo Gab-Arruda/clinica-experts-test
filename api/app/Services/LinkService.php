@@ -14,6 +14,11 @@ class LinkService
         if(isset($params['filterByColumn']) && isset($params['filterOrderType'])) {
             $link->orderBy($params['filterByColumn'], $params['filterOrderType']);
         }
+        if(isset($params['searchString'])) {
+            $link->where('slug', 'LIKE', '%'.$params['searchString'].'%')
+                ->OrWhere('url', 'LIKE', '%'.$params['searchString'].'%')
+                ->OrWhere('description', 'LIKE', '%'.$params['searchString'].'%');
+        }
 
         return $link->get();
     }
@@ -35,6 +40,10 @@ class LinkService
 
     public function update(array $params, int $id) {
         $link = Link::findOrFail($id);
+        $existingLink = Link::where('slug', $params['slug'])->first();
+        if($existingLink && $existingLink->id != $id) {
+            throw new \Exception("Slug already taken", 422);
+        }
         $link->slug = empty($params['slug']) ? $this->random_str() : $params['slug'];
         $link->url = $params['url'];
         $link->description = $params['description'];

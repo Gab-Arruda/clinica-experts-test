@@ -16,7 +16,7 @@ class StoreUpdateLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => 'nullable|string|unique:links,slug',
+            'slug' => 'nullable|string',
             'url' => 'required|string|active_url',
             'description' => 'required|string'
         ];

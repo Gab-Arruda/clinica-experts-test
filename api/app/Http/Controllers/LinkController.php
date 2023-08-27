@@ -6,6 +6,7 @@ use \App\Http\Requests\StoreUpdateLinkRequest;
 use \App\Http\Requests\ListLinkRequest;
 use App\Services\LinkService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LinkController extends Controller
 {
@@ -46,7 +47,16 @@ class LinkController extends Controller
      */
     public function update(StoreUpdateLinkRequest $request, int $id)
     {
-        return $this->service->update($request->validated(), $id);
+        try {
+            return $this->service->update($request->validated(), $id);
+        } catch (\Exception $e) {
+            $response = response()->json([
+                'message' => 'Invalid data',
+                'details' => $e->getMessage(),
+            ], $e->getCode());
+
+            throw new HttpResponseException($response);
+        }
     }
 
     /**
