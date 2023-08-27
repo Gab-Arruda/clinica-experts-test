@@ -51,8 +51,8 @@ const setColumn = (value) => {
   getLinksList();
 }
 
-const getLinksList = () => {
-  axios.get('http://localhost:8000/api/links/', { params: {filterByColumn : filter_column.value, filterOrderType: order_type.value}})
+const getLinksList = (search) => {
+  axios.get('http://localhost:8000/api/links/', { params: {filterByColumn : filter_column.value, filterOrderType: order_type.value, searchString: search}})
   .then(response => {
     links_list.value = response.data;
   });
@@ -81,7 +81,7 @@ onMounted(() => {
 
 <template>
   <main class="app bg-slate-200 flex flex-col justify-between h-screen">
-    <Header @setAddModal="setAddModal"></Header>
+    <Header @setAddModal="setAddModal" @getLinksList="getLinksList"></Header>
     <body class="px-16 app bg-slate-200 grow">        
       <Metrics :app_metrics="app_metrics"></Metrics>
       <Filter v-if="links_list.length" @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
