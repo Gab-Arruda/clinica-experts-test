@@ -25,7 +25,7 @@ const addLink = () => {
     .then(response => {
         emit('setAddModal');
         emit('getLinksList');
-  });
+    });
 }
 
 </script>
