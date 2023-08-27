@@ -19,6 +19,7 @@ const add_modal = ref(false);
 const filter_modal = ref(false);
 const edit_modal = ref(false);
 const selected_link = ref({});
+const app_metrics = ref({});
 
 const addLink = () => {
   // chamar rota para adicionar um link
@@ -79,9 +80,16 @@ const getLinksList = () => {
     links_list.value = response.data;
   });
 }
+const getMetrics = () => {
+  axios.get('http://localhost:8000/api/links/metrics')
+  .then(response => {
+    app_metrics.value = response.data;
+  });
+}
 
 onMounted(() => {
   getLinksList();
+  getMetrics();
 })
 </script>
 
@@ -89,11 +97,12 @@ onMounted(() => {
   <main class="app bg-slate-200 flex flex-col justify-between h-screen">
     <Header @setAddModal="setAddModal"></Header>
     <body class="px-16 app bg-slate-200 grow">        
-      <Metrics></Metrics>
+      <Metrics :app_metrics="app_metrics"></Metrics>
       <Filter @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
       <LinksList :links_list="links_list" @setEditModal="setEditModal" @deleteLink="deleteLink"></LinksList>
     </body>
-    <AddModal v-if="add_modal" @addLink="addLink" @setAddModal="setAddModal" @getLinksList="getLinksList"></AddModal>
+    <AddModal v-if="add_modal" @addLink="addLink" @setAddModal="setAddModal"
+    @getLinksList="getLinksList" @getMetrics="getMetrics"></AddModal>
     <EditModal v-if="edit_modal" :selected_link="selected_link" @setEditModal="setEditModal" @getLinksList="getLinksList"></EditModal>
     <FilterModal v-if="filter_modal" @setColumn="setColumn" @setFilterModal="setFilterModal"></FilterModal>
     <Footer></Footer>

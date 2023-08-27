@@ -15,9 +15,9 @@ const columns = ["slug", "url", "description", "counter", "created_at", "updated
                 <h3 class="font-bold">Filter links</h3>
             </div>
             <fieldset action="" class="p-3">
-                <div v-for="column in columns" :key="column">
-                    <input type="radio" name="column" :value="column" v-model="selected_column"/>
-                    <label :for="column">{{ column.replace("_", " ") }}</label>
+                <div v-for="column in columns" :key="column" class="flex items-center">
+                    <input type="radio" :id="column" name="column" :value="column" v-model="selected_column"/>
+                    <label :for="column" class="text-slate-500 font-bold mx-1">{{ column.replace("_", " ") }}</label>
                 </div>
             </fieldset>
             <div class="flex justify-center items-center p-3">
