@@ -1,4 +1,7 @@
 <script setup>
+import { ref, onMounted, watch } from 'vue';
+import axios from 'axios';
+
 defineProps({
     filter_modal: {
     type: Boolean,
@@ -6,6 +9,8 @@ defineProps({
   }
 })
 defineEmits(['setFilterModal','setColumn'])
+
+const columns = ["slug", "url", "description", "counter", "created_at", "updated_at"];
 </script>
 
 <template>
@@ -14,9 +19,12 @@ defineEmits(['setFilterModal','setColumn'])
             <div class="border-b px-4 py-2">
                 <h3 class="font-bold">Filter links</h3>
             </div>
-            <form action="" class="p-3">
-                <input type="text" placeholder="Inputs do form vão aqui">
-            </form>
+            <fieldset action="" class="p-3">
+                <div v-for="column in columns" :key="column">
+                    <input type="radio" name="column" :value="column"/>
+                    <label :for="column">{{ column }}</label>
+                </div>
+            </fieldset>
             <div class="flex justify-center items-center p-3">
                 <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mx-3" @click="$emit('setFilterModal')">Cancelar</button>
                 <button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white mx-3" @click="$emit('setColumn', 'slug')">Filtrar</button>
