@@ -10,6 +10,7 @@ import Filter from './components/Filter.vue'
 import LinksList from './components/LinksList.vue'
 import AddModal from './components/AddModal.vue'
 import EditModal from './components/EditModal.vue'
+import FilterModal from './components/FilterModal.vue'
 
 const links_list = ref([]);
 const order_type = ref('desc');
@@ -65,6 +66,13 @@ const setOrderType = () => {
   getLinksList();
 }
 
+const setColumn = (value) => {
+  filter_column.value = value;
+  console.log('setColumn: ' + filter_column.value);
+  filter_modal.value = !filter_modal.value;
+  getLinksList();
+}
+
 const getLinksList = () => {
   axios.get('http://localhost:8000/api/links/', { params: {filterByColumn : filter_column.value, filterOrderType: order_type.value}})
   .then(response => {
@@ -87,6 +95,7 @@ onMounted(() => {
     </body>
     <AddModal :add_modal="add_modal" @addLink="addLink" @setAddModal="setAddModal"></AddModal>
     <EditModal :edit_modal="edit_modal" :selected_link="selected_link" @editLink="editLink" @setEditModal="setEditModal"></EditModal>
+    <FilterModal :filter_modal="filter_modal" @setColumn="setColumn" @setFilterModal="setFilterModal"></FilterModal>
     <Footer></Footer>
   </main>
 </template>
