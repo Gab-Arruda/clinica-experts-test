@@ -2,12 +2,6 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-defineProps({
-  add_modal: {
-    type: Boolean,
-    required: true
-  }
-})
 const emit = defineEmits(['addLink','setAddModal', 'getLinksList']);
 
 const slug = ref('');
@@ -31,7 +25,7 @@ const addLink = () => {
 </script>
 
 <template>
-    <section v-if="add_modal" class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
+    <section class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
         <div class="bg-white rounded shadow-lg">
             <div class="border-b px-4 py-2">
                 <h3 class="font-bold">Add new link</h3>

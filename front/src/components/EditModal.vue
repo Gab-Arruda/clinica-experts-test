@@ -1,20 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
-  edit_modal: {
-    type: Boolean,
-    required: true
-  },
   selected_link: {
     type: Object,
-    required: true,
-    default: {
-      url: 'dummyURL',
-      slug: 'dummySlug',
-      description: 'dummyDescription'
-    }
+    required: true
   }
 })
 const emit = defineEmits(['setEditModal', 'getLinksList']);
@@ -29,8 +20,8 @@ const editLink = () => {
         url: url.value,
         description: description.value
     };
-    
-    axios.put('http://localhost:8000/api/links/', data)
+
+    axios.put('http://localhost:8000/api/links/'+props.selected_link.id, data)
     .then(response => {
         emit('setEditModal');
         emit('getLinksList');
@@ -38,18 +29,16 @@ const editLink = () => {
     });
 }
 
-// onMounted(() => {
-//   console.log('antes do mounted');
-//   slug.value = props.selected_link.slug;
-//   url.value = props.selected_link.url;
-//   description.value = props.selected_link.description;
-//   console.log('depois do mounted');
-// })
+onMounted(() => {
+  slug.value = props.selected_link.slug;
+  url.value = props.selected_link.url;
+  description.value = props.selected_link.description;
+})
 
 </script>
 
 <template>
-    <section v-if="edit_modal" class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
+    <section class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
         <div class="bg-white rounded shadow-lg w-1/3">
             <div class="border-b px-4 py-2">
                 <h3 class="font-bold">Edit link: {{ this.selected_link.slug }}</h3>
