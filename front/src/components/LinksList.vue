@@ -21,7 +21,7 @@ defineProps({
             <span class="counter text-xl">{{ link.counter }}</span>
             <img src="../assets/bar-chart.png" alt="bar-chart-icon" class="w-6 h-6 mx-1"/>
           </div>
-          <img src="../assets/editing.png" alt="edit-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="$emit('setEditModal')"/>
+          <img src="../assets/editing.png" alt="edit-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="$emit('setEditModal', link)"/>
           <img src="../assets/trash.png" alt="trash-icon" class="w-6 h-6 mx-1 cursor-pointer" @click="$emit('deleteLink', link)"/>
         </div>
       </li>

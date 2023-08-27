@@ -9,6 +9,7 @@ import Metrics from './components/Metrics.vue'
 import Filter from './components/Filter.vue'
 import LinksList from './components/LinksList.vue'
 import AddModal from './components/AddModal.vue'
+import EditModal from './components/EditModal.vue'
 
 const links_list = ref([]);
 const order_type = ref('desc');
@@ -16,6 +17,7 @@ const filter_column = ref('created_at');
 const add_modal = ref(false);
 const filter_modal = ref(false);
 const edit_modal = ref(false);
+const selected_link = ref({});
 
 const addLink = () => {
   // chamar rota para adicionar um link
@@ -25,7 +27,8 @@ const addLink = () => {
 
 const editLink = (link) => {
   // chamar rota para editar o link
-  console.log('deletou o link: ' + link.url);
+  edit_modal.value = !edit_modal.value;
+  console.log('editou o link: ' + link.url);
   // atualizar o links_list
 }
 
@@ -47,8 +50,11 @@ const setFilterModal = () => {
   console.log('setFilterModal: ' + filter_modal.value);
 }
 
-const setEditModal = () => {
+const setEditModal = (link) => {
   // abre modal de editar
+  if(link) {
+    selected_link.value = link;
+  }
   edit_modal.value = !edit_modal.value;
   console.log('setEditModal: ' + edit_modal.value);
 }
@@ -80,6 +86,7 @@ onMounted(() => {
       <LinksList :links_list="links_list" @setEditModal="setEditModal" @deleteLink="deleteLink"></LinksList>
     </body>
     <AddModal :add_modal="add_modal" @addLink="addLink" @setAddModal="setAddModal"></AddModal>
+    <EditModal :edit_modal="edit_modal" :selected_link="selected_link" @editLink="editLink" @setEditModal="setEditModal"></EditModal>
     <Footer></Footer>
   </main>
 </template>
