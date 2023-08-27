@@ -20,6 +20,7 @@ const filter_modal = ref(false);
 const edit_modal = ref(false);
 const selected_link = ref({});
 const app_metrics = ref({});
+const user_ip = ref('');
 
 const addLink = () => {
   // chamar rota para adicionar um link
@@ -74,6 +75,7 @@ const getLinksList = () => {
     links_list.value = response.data;
   });
 }
+
 const getMetrics = () => {
   axios.get('http://localhost:8000/api/links/metrics')
   .then(response => {
@@ -81,9 +83,17 @@ const getMetrics = () => {
   });
 }
 
+const getUserIP = () => {
+  axios.get('https://api.ipify.org?format=json')
+  .then(response => {
+    user_ip.value = response.data.ip;
+  });
+}
+
 onMounted(() => {
   getLinksList();
   getMetrics();
+  getUserIP();
 })
 </script>
 
@@ -93,8 +103,8 @@ onMounted(() => {
     <body class="px-16 app bg-slate-200 grow">        
       <Metrics :app_metrics="app_metrics"></Metrics>
       <Filter @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
-      <LinksList :links_list="links_list" @setEditModal="setEditModal" @getLinksList="getLinksList"
-      @getMetrics="getMetrics"></LinksList>
+      <LinksList :links_list="links_list" :user_ip="user_ip" @setEditModal="setEditModal"
+      @getLinksList="getLinksList" @getMetrics="getMetrics"></LinksList>
     </body>
     <AddModal v-if="add_modal" @addLink="addLink" @setAddModal="setAddModal"
     @getLinksList="getLinksList" @getMetrics="getMetrics"></AddModal>
