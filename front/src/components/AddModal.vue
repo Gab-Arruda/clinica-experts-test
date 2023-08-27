@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-const emit = defineEmits(['addLink','setAddModal', 'getLinksList', 'getMetrics']);
+const emit = defineEmits(['setAddModal', 'getLinksList', 'getMetrics']);
 
 const slug = ref('');
 const url = ref('');

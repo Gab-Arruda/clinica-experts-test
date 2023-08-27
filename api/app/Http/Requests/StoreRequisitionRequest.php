@@ -17,7 +17,7 @@ class StoreRequisitionRequest extends FormRequest
     {
         return [
             'link_id' => 'required|integer|exists:links,id',
-            'ip' => 'required|integer',
+            'ip' => 'required|string',
             'user_agent' => 'required|string',
         ];
     }

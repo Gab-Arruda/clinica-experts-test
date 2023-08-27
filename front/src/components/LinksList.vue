@@ -27,7 +27,7 @@ const redirectToURL = (link) => {
     ip: props.user_ip,
     user_agent: navigator.userAgent
   };
-  console.log(requisition_data);
+
   axios.post('http://localhost:8000/api/requisitions/', requisition_data)
   .then(response => {
     emit('getLinksList');

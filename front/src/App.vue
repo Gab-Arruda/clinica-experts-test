@@ -22,29 +22,14 @@ const selected_link = ref({});
 const app_metrics = ref({});
 const user_ip = ref('');
 
-const addLink = () => {
-  // chamar rota para adicionar um link
-  add_modal.value = !add_modal.value;
-  // atualizar o links_list
-}
-
-const editLink = (link) => {
-  // chamar rota para editar o link
-  edit_modal.value = !edit_modal.value;
-  console.log('editou o link: ' + link.url);
-  // atualizar o links_list
-}
-
 const setAddModal = () => {
   // abre modal de filtrar
   add_modal.value = !add_modal.value;
-  console.log('setAddModal: ' + add_modal.value);
 }
 
 const setFilterModal = () => {
   // abre modal de filtrar
   filter_modal.value = !filter_modal.value;
-  console.log('setFilterModal: ' + filter_modal.value);
 }
 
 const setEditModal = (link) => {
@@ -53,18 +38,15 @@ const setEditModal = (link) => {
     selected_link.value = link;
   }
   edit_modal.value = !edit_modal.value;
-  console.log('setEditModal: ' + edit_modal.value);
 }
 
 const setOrderType = () => {
   order_type.value = order_type.value == 'asc' ? 'desc' : 'asc';
-  console.log('setOrderType: ' + order_type.value);
   getLinksList();
 }
 
 const setColumn = (value) => {
   filter_column.value = value;
-  console.log('setColumn: ' + filter_column.value);
   filter_modal.value = !filter_modal.value;
   getLinksList();
 }
@@ -102,11 +84,14 @@ onMounted(() => {
     <Header @setAddModal="setAddModal"></Header>
     <body class="px-16 app bg-slate-200 grow">        
       <Metrics :app_metrics="app_metrics"></Metrics>
-      <Filter @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
-      <LinksList :links_list="links_list" :user_ip="user_ip" @setEditModal="setEditModal"
+      <Filter v-if="links_list.length" @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
+      <LinksList v-if="links_list.length" :links_list="links_list" :user_ip="user_ip" @setEditModal="setEditModal"
       @getLinksList="getLinksList" @getMetrics="getMetrics"></LinksList>
+      <div v-if="links_list.length == 0" class="flex items-center justify-center h-full">
+        <img src="./assets/no-results.png" alt="no-results-icon" class="w-36 h-36 mx-1"/>
+      </div>
     </body>
-    <AddModal v-if="add_modal" @addLink="addLink" @setAddModal="setAddModal"
+    <AddModal v-if="add_modal" @setAddModal="setAddModal"
     @getLinksList="getLinksList" @getMetrics="getMetrics"></AddModal>
     <EditModal v-if="edit_modal" :selected_link="selected_link" @setEditModal="setEditModal" @getLinksList="getLinksList"></EditModal>
     <FilterModal v-if="filter_modal" @setColumn="setColumn" @setFilterModal="setFilterModal"></FilterModal>

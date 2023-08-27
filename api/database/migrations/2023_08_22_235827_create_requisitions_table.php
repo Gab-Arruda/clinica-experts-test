@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('requisitions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('link_id');
-            $table->integer('ip');
+            $table->string('ip');
             $table->string('user_agent');
             $table->timestamps();
 
