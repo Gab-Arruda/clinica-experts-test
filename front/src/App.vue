@@ -93,7 +93,7 @@ onMounted(() => {
       <Filter @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
       <LinksList :links_list="links_list" @setEditModal="setEditModal" @deleteLink="deleteLink"></LinksList>
     </body>
-    <AddModal :add_modal="add_modal" @addLink="addLink" @setAddModal="setAddModal"></AddModal>
+    <AddModal :add_modal="add_modal" @addLink="addLink" @setAddModal="setAddModal" @getLinksList="getLinksList"></AddModal>
     <EditModal :edit_modal="edit_modal" :selected_link="selected_link" @editLink="editLink" @setEditModal="setEditModal"></EditModal>
     <FilterModal :filter_modal="filter_modal" @setColumn="setColumn" @setFilterModal="setFilterModal"></FilterModal>
     <Footer></Footer>
