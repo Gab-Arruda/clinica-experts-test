@@ -34,12 +34,6 @@ const editLink = (link) => {
   // atualizar o links_list
 }
 
-const deleteLink = (link) => {
-  // chamar rota para deletar o link
-  console.log('delete o link: ' + link.url);
-  // atualizar o links_list
-}
-
 const setAddModal = () => {
   // abre modal de filtrar
   add_modal.value = !add_modal.value;
@@ -99,7 +93,8 @@ onMounted(() => {
     <body class="px-16 app bg-slate-200 grow">        
       <Metrics :app_metrics="app_metrics"></Metrics>
       <Filter @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
-      <LinksList :links_list="links_list" @setEditModal="setEditModal" @deleteLink="deleteLink"></LinksList>
+      <LinksList :links_list="links_list" @setEditModal="setEditModal" @getLinksList="getLinksList"
+      @getMetrics="getMetrics"></LinksList>
     </body>
     <AddModal v-if="add_modal" @addLink="addLink" @setAddModal="setAddModal"
     @getLinksList="getLinksList" @getMetrics="getMetrics"></AddModal>
