@@ -10,12 +10,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LinkController extends Controller
 {
-    protected LinkService $service;
-
-    public function __construct(LinkService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(protected LinkService $service){}
 
     /**
      * Display a listing of the resource.

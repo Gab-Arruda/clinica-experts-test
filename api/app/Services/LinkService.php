@@ -68,6 +68,12 @@ class LinkService
         ];
     }
 
+    public function reset_counter() {
+        return Link::where('counter', '>', 0)->update([
+            'counter' => 0
+        ]);
+    }
+
     private function random_str(
         int $length = 8,
         string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'

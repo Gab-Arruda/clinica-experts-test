@@ -7,12 +7,7 @@ use App\Services\RequisitionService;
 
 class RequisitionController extends Controller
 {
-    protected RequisitionService $service;
-
-    public function __construct(RequisitionService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(protected RequisitionService $service){}
     /**
      * Display a listing of the resource.
      */
