@@ -13,9 +13,11 @@ const emit = defineEmits(['setEditModal', 'getLinksList']);
 const slug = ref('');
 const url = ref('');
 const description = ref('');
+const show_skeleton = ref(false);
 
 const editLink = () => {
-  const data = {
+    show_skeleton.value = true;
+    const data = {
         slug: slug.value,
         url: url.value,
         description: description.value
@@ -24,6 +26,7 @@ const editLink = () => {
     axios.put('http://localhost:8000/api/links/'+props.selected_link.id, data)
     .then(response => {
         emit('setEditModal');
+        show_skeleton.value = false;
         emit('getLinksList');
         console.log('editou o link: ' + props.selected_link.slug);
     });
@@ -39,7 +42,7 @@ onMounted(() => {
 
 <template>
     <section class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
-        <div class="bg-white rounded shadow-lg w-full max-w-screen-md mx-2">
+        <div v-if="!show_skeleton" class="bg-white rounded shadow-lg w-full max-w-screen-md mx-2">
             <div class="border-b px-4 py-2">
                 <h3 class="font-bold">Edit link: {{ this.selected_link.slug }}</h3>
             </div>
@@ -64,6 +67,9 @@ onMounted(() => {
                 <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mx-3" @click="$emit('setEditModal')">Cancelar</button>
                 <button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white mx-3" @click="editLink()">Editar</button>
             </div>
+        </div>
+        <div v-if="show_skeleton" class="flex justify-center items-center w-full">
+            <img src="../assets/loading.png" alt="loading" class="h-20 w-20">
         </div>
     </section>
 </template>

@@ -56,12 +56,10 @@ const setColumn = (value) => {
 
 const getLinksList = (search) => {
   list_skeleton.value = true;
-  console.log('list_skeleton: '+list_skeleton.value);
   axios.get('http://localhost:8000/api/links/', { params: {filterByColumn : filter_column.value, filterOrderType: order_type.value, searchString: search}})
   .then(response => {
     links_list.value = response.data;
     list_skeleton.value = false;
-    console.log('list_skeleton: '+list_skeleton.value);
   });
 }
 

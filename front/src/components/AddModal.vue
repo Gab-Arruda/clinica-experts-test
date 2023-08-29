@@ -7,8 +7,10 @@ const emit = defineEmits(['setAddModal', 'getLinksList', 'getMetrics']);
 const slug = ref('');
 const url = ref('');
 const description = ref('');
+const show_skeleton = ref(false);
 
 const addLink = () => {
+    show_skeleton.value = true;
     const data = {
         slug: slug.value,
         url: url.value,
@@ -18,6 +20,7 @@ const addLink = () => {
     axios.post('http://localhost:8000/api/links/', data)
     .then(response => {
         emit('setAddModal');
+        show_skeleton.value = false;
         emit('getLinksList');
         emit('getMetrics');
     });
@@ -27,7 +30,7 @@ const addLink = () => {
 
 <template>
     <section class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
-        <div class="bg-white rounded shadow-lg w-full max-w-screen-md mx-2">
+        <div v-if="!show_skeleton" class="bg-white rounded shadow-lg w-full max-w-screen-md mx-2">
             <div class="border-b px-4 py-2">
                 <h3 class="font-bold">Add new link</h3>
             </div>
@@ -52,6 +55,9 @@ const addLink = () => {
                 <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mx-3" @click="$emit('setAddModal')">Cancelar</button>
                 <button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white mx-3" @click="addLink()">Adicionar</button>
             </div>
+        </div>
+        <div v-if="show_skeleton" class="flex justify-center items-center w-full">
+            <img src="../assets/loading.png" alt="loading" class="h-20 w-20">
         </div>
     </section>
 </template>
