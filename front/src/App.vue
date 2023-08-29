@@ -97,7 +97,7 @@ onMounted(() => {
       <Filter v-if="links_list.length && !list_skeleton" @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
       <LinksList v-if="links_list.length && !list_skeleton" :links_list="links_list" :user_ip="user_ip" @setEditModal="setEditModal"
       @getLinksList="getLinksList" @getMetrics="getMetrics"></LinksList>
-      <div v-if="links_list.length == 0 && !list_skeleton" class="flex items-center justify-center">
+      <div v-if="links_list.length == 0 && !list_skeleton" class="flex items-center justify-center my-4 sm:my-12">
         <img src="./assets/no-results.png" alt="no-results-icon" class="w-36 h-36 mx-1"/>
       </div>
       <div v-if="list_skeleton" class="flex justify-center items-center my-4 sm:h-auto sm:w-full">
