@@ -11,7 +11,6 @@ import LinksList from './components/LinksList.vue'
 import AddModal from './components/AddModal.vue'
 import EditModal from './components/EditModal.vue'
 import FilterModal from './components/FilterModal.vue'
-import Skeleton from 'primevue/skeleton';
 
 const links_list = ref([]);
 const order_type = ref('desc');
