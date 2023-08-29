@@ -11,6 +11,7 @@ import LinksList from './components/LinksList.vue'
 import AddModal from './components/AddModal.vue'
 import EditModal from './components/EditModal.vue'
 import FilterModal from './components/FilterModal.vue'
+import Skeleton from 'primevue/skeleton';
 
 const links_list = ref([]);
 const order_type = ref('desc');
@@ -21,6 +22,8 @@ const edit_modal = ref(false);
 const selected_link = ref({});
 const app_metrics = ref({});
 const user_ip = ref('');
+const list_skeleton = ref(false);
+const metrics_skeleton = ref(false);
 
 const setAddModal = () => {
   // abre modal de filtrar
@@ -52,16 +55,22 @@ const setColumn = (value) => {
 }
 
 const getLinksList = (search) => {
+  list_skeleton.value = true;
+  console.log('list_skeleton: '+list_skeleton.value);
   axios.get('http://localhost:8000/api/links/', { params: {filterByColumn : filter_column.value, filterOrderType: order_type.value, searchString: search}})
   .then(response => {
     links_list.value = response.data;
+    list_skeleton.value = false;
+    console.log('list_skeleton: '+list_skeleton.value);
   });
 }
 
 const getMetrics = () => {
+  metrics_skeleton.value = true;
   axios.get('http://localhost:8000/api/links/metrics')
   .then(response => {
     app_metrics.value = response.data;
+    metrics_skeleton.value = false;
   });
 }
 
@@ -83,12 +92,18 @@ onMounted(() => {
   <main class="app bg-slate-200 flex flex-col justify-between h-screen">
     <Header @setAddModal="setAddModal" @getLinksList="getLinksList"></Header>
     <body class="px-16 app bg-slate-200 grow">        
-      <Metrics :app_metrics="app_metrics"></Metrics>
-      <Filter v-if="links_list.length" @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
-      <LinksList v-if="links_list.length" :links_list="links_list" :user_ip="user_ip" @setEditModal="setEditModal"
+      <Metrics v-if="!metrics_skeleton" :app_metrics="app_metrics"></Metrics>
+      <div v-if="metrics_skeleton" class="flex justify-center items-center my-4 sm:h-[116px] sm:w-full">
+        <div class="h-[324px] w-[247px] sm:h-20 sm:w-[460px] bg-slate-300 rounded-md"></div>
+      </div>
+      <Filter v-if="links_list.length && !list_skeleton" @setOrderType="setOrderType" @setFilterModal="setFilterModal"></Filter>
+      <LinksList v-if="links_list.length && !list_skeleton" :links_list="links_list" :user_ip="user_ip" @setEditModal="setEditModal"
       @getLinksList="getLinksList" @getMetrics="getMetrics"></LinksList>
-      <div v-if="links_list.length == 0" class="flex items-center justify-center h-full">
+      <div v-if="links_list.length == 0 && !list_skeleton" class="flex items-center justify-center">
         <img src="./assets/no-results.png" alt="no-results-icon" class="w-36 h-36 mx-1"/>
+      </div>
+      <div v-if="list_skeleton" class="flex justify-center items-center my-4 sm:h-auto sm:w-full">
+        <div class="h-[142px] w-[247px] sm:h-[200px] sm:w-[760px] bg-slate-300 rounded-md"></div>
       </div>
     </body>
     <AddModal v-if="add_modal" @setAddModal="setAddModal"
