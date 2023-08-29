@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import axios from 'axios';
 const emit = defineEmits(['setEditModal', 'getLinksList', 'getMetrics'])
 const props = defineProps({
@@ -11,13 +12,16 @@ const props = defineProps({
     required: true
   }
 })
+const show_skeleton = ref(false);
 
 const deleteLink = (link) => {
-    axios.delete('http://localhost:8000/api/links/'+link.id)
-    .then(response => {
-        emit('getLinksList');
-        emit('getMetrics');
-    });
+  show_skeleton.value = true;
+  axios.delete('http://localhost:8000/api/links/'+link.id)
+  .then(response => {
+      show_skeleton.value = false;
+      emit('getLinksList');
+      emit('getMetrics');
+  });
 }
 
 const redirectToURL = (link) => {
@@ -56,6 +60,11 @@ const redirectToURL = (link) => {
         </div>
       </li>
     </ul>
+    <div v-if="show_skeleton" class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
+      <div class="flex justify-center items-center w-full">
+        <img src="../assets/loading.png" alt="loading" class="h-20 w-20">
+      </div>
+    </div>
   </section>
 </template>
 
